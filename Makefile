@@ -12,7 +12,7 @@
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-LIBFT = ./libft/libft.a
+LIBFT = ./functions/libft.a
 RM = rm -rf
 
 SERVER = server
@@ -38,7 +38,7 @@ CLIENT_BONUS_OBJS = $(CLIENT_BONUS_SRCS:.c=.o)
 all: $(SERVER) $(CLIENT)
 
 $(LIBFT):
-	$(MAKE) -C ./libft
+	$(MAKE) -C ./functions
 $(SERVER): $(SV_OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(SV_OBJS) $(LIBFT) -o server
 $(CLIENT): $(CLIENT_OBJS) $(LIBFT)
@@ -50,11 +50,11 @@ $(CLIENT_BONUS): $(CLIENT_BONUS_OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(CLIENT_BONUS_OBJS) $(LIBFT) -o client_bonus
 
 clean:
-	$(MAKE) clean -C ./libft
+	$(MAKE) clean -C ./functions
 	$(RM) $(SV_OBJS) $(CLIENT_OBJS)
 	$(RM) $(SV_BONUS_OBJS) $(CLIENT_BONUS_OBJS) 
 fclean: clean
-	$(MAKE) fclean -C ./libft
+	$(MAKE) fclean -C ./functions
 	$(RM) $(SERVER) $(CLIENT)
 	$(RM) $(SERVER_BONUS) $(CLIENT_BONUS)
 re: fclean all
