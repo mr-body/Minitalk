@@ -46,7 +46,7 @@ void	ft_send_char(int pid, unsigned char c)
 	while (i >= 0)
 	{
 		ft_send_bit(pid, (c >> i) & 1);
-		usleep(10);
+		usleep(400);
 		i--;
 	}
 }

@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waalexan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 16:52:22 by waalexan          #+#    #+#             */
-/*   Updated: 2024/06/20 16:52:49 by waalexan         ###   ########.fr       */
+/*   Created: 2024/05/17 16:57:47 by waalexan          #+#    #+#             */
+/*   Updated: 2024/05/17 18:46:14 by waalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
+#include "libft.h"
 
-# include "../functions/libft.h"
+char	*ft_strtrim(char const *s1, char const *set)
+{
+	size_t	start;
+	size_t	end;
 
-# include <signal.h>
-# include <unistd.h>
-
-#endif
+	start = 0;
+	end = ft_strlen(s1);
+	if (!s1 || !set)
+		return (NULL);
+	while (s1[start] && ft_strchr(set, s1[start]))
+		start++;
+	while (end > start && ft_strchr(set, s1[end - 1]))
+		end--;
+	return (ft_substr(s1, start, end - start));
+}

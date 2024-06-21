@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waalexan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 16:52:22 by waalexan          #+#    #+#             */
-/*   Updated: 2024/06/20 16:52:49 by waalexan         ###   ########.fr       */
+/*   Created: 2024/05/14 09:57:50 by waalexan          #+#    #+#             */
+/*   Updated: 2024/05/14 10:00:44 by waalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
-
-# include "../functions/libft.h"
-
-# include <signal.h>
-# include <unistd.h>
-
-#endif
+int	ft_isdigit(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}

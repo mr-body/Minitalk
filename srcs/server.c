@@ -6,11 +6,19 @@
 /*   By: waalexan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:31:23 by waalexan          #+#    #+#             */
-/*   Updated: 2024/06/20 16:47:23 by waalexan         ###   ########.fr       */
+/*   Updated: 2024/06/21 12:21:51 by waalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
+
+void	clear(void)
+{
+	const char	*clear_screen;
+
+	clear_screen = "\033[H\033[2J";
+	write(STDOUT_FILENO, clear_screen, ft_strlen(clear_screen));
+}
 
 void	ft_handle_signal(int signum, siginfo_t *info, void *context)
 {
@@ -32,17 +40,40 @@ void	ft_handle_signal(int signum, siginfo_t *info, void *context)
 	if (bit_count == 8)
 	{
 		write(1, &character, 1);
+		if (character == '\0')
+			write(1, "\n", 1);
 		bit_count = 0;
 		character = 0;
 	}
 	kill(client_pid, SIGUSR2);
 }
 
+void	header(void)
+{
+	clear();
+	ft_printf("             ++++++++  +++++++++++++\n");
+	ft_printf("           ++++++++    +++++ +++++++\n");
+	ft_printf("         ++++++++      +++   +++++++\n");
+	ft_printf("       ++++++++        ++    +++++++\n");
+	ft_printf("     ++++++++              ++++++++\n");
+	ft_printf("   +++++++++             +++++++++\n");
+	ft_printf(" +++++++++             +++++++++\n");
+	ft_printf("+++++++++++++++++++++  +++++++     +     ++\n");
+	ft_printf("+++++++++++++++++++++  +++++++  ++++     ++  L U A N D A\n");
+	ft_printf("+++++++++++++++++++++  +++++++ +++++     ++  user: waalexan\n");
+	ft_printf("             ++++++++  +++++++++++++     ++\n");
+	ft_printf("             ++++++++ 		 			\n");
+	ft_printf("             ++++++++ 	minitalk\n");
+	ft_printf("             +++++++    Server PID: ");
+	ft_putnbr_fd(getpid(), 1);
+	ft_color("\n--------------MENSAGENS ENVIADAS-------------\n", "\033[1;33m");
+}
+
 int	main(void)
 {
 	struct sigaction	sa;
 
-	ft_printf("Server PID: %d\n", getpid());
+	header();
 	sa.sa_sigaction = &ft_handle_signal;
 	sa.sa_flags = SA_SIGINFO;
 	sigaction(SIGUSR1, &sa, NULL);

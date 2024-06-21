@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waalexan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 16:52:22 by waalexan          #+#    #+#             */
-/*   Updated: 2024/06/20 16:52:49 by waalexan         ###   ########.fr       */
+/*   Created: 2024/05/23 09:51:18 by waalexan          #+#    #+#             */
+/*   Updated: 2024/05/23 12:53:31 by waalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
+#include "ft_printf.h"
 
-# include "../functions/libft.h"
+int	ft_putstr(char *s)
+{
+	int	len;
 
-# include <signal.h>
-# include <unistd.h>
-
-#endif
+	if (!s)
+		return (ft_putstr("(null)"));
+	len = 0;
+	while (*s)
+	{
+		ft_putchar(*s++);
+		len++;
+	}
+	return (len);
+}

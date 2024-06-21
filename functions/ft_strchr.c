@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waalexan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 16:52:22 by waalexan          #+#    #+#             */
-/*   Updated: 2024/06/20 16:52:49 by waalexan         ###   ########.fr       */
+/*   Created: 2024/05/15 10:56:25 by waalexan          #+#    #+#             */
+/*   Updated: 2024/05/15 11:39:00 by waalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
-
-# include "../functions/libft.h"
-
-# include <signal.h>
-# include <unistd.h>
-
-#endif
+char	*ft_strchr(const char *s, int c)
+{
+	while ((char)c != *s)
+	{
+		if (!*s)
+			return (0);
+		s++;
+	}
+	return ((char *)s);
+}

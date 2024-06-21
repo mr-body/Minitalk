@@ -6,7 +6,7 @@
 /*   By: waalexan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:50:46 by waalexan          #+#    #+#             */
-/*   Updated: 2024/06/20 16:54:35 by waalexan         ###   ########.fr       */
+/*   Updated: 2024/06/21 13:08:49 by waalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_send_char(int pid, unsigned char c)
 	while (i >= 0)
 	{
 		ft_send_bit(pid, (c >> i) & 1);
-		usleep(10);
+		usleep(400);
 		i--;
 	}
 }

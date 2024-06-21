@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_printhex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waalexan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 16:52:22 by waalexan          #+#    #+#             */
-/*   Updated: 2024/06/20 16:52:49 by waalexan         ###   ########.fr       */
+/*   Created: 2024/05/23 09:54:26 by waalexan          #+#    #+#             */
+/*   Updated: 2024/05/23 15:45:07 by waalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
+#include "ft_printf.h"
 
-# include "../functions/libft.h"
+int	ft_printhex(unsigned long n, int type)
+{
+	char	*digits;
+	int		len;
 
-# include <signal.h>
-# include <unistd.h>
-
-#endif
+	len = 0;
+	if (type)
+		digits = "0123456789ABCDEF";
+	else
+		digits = "0123456789abcdef";
+	if (n >= 16)
+		len += ft_printhex(n / 16, type);
+	ft_putchar(digits[n % 16]);
+	len++;
+	return (len);
+}

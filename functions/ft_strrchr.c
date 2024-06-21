@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waalexan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 16:52:22 by waalexan          #+#    #+#             */
-/*   Updated: 2024/06/20 16:52:49 by waalexan         ###   ########.fr       */
+/*   Created: 2024/05/15 11:39:06 by waalexan          #+#    #+#             */
+/*   Updated: 2024/05/15 12:15:14 by waalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
+#include "libft.h"
 
-# include "../functions/libft.h"
+char	*ft_strrchr(const char *s, int c)
+{
+	const char	*last_occurrence;
 
-# include <signal.h>
-# include <unistd.h>
-
-#endif
+	last_occurrence = NULL;
+	while (*s != '\0')
+	{
+		if (*s == (char)c)
+		{
+			last_occurrence = s;
+		}
+		s++;
+	}
+	if (*s == (char)c)
+		return ((char *)s);
+	return ((char *)last_occurrence);
+}
