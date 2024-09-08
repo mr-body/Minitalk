@@ -20,30 +20,30 @@ void	clear(void)
 	write(STDOUT_FILENO, clear_screen, ft_strlen(clear_screen));
 }
 
-void	ft_handle_signal(int signum, siginfo_t *info, void *context)
+void	ft_read_signal(int signum, siginfo_t *info, void *context)
 {
-	static unsigned char	character = 0;
-	static int				bit_count = 0;
+	static unsigned char	chr = 0;
+	static int				i = 0;
 	static pid_t			client_pid = 0;
 
 	(void)context;
 	if (client_pid != info->si_pid)
 	{
-		bit_count = 0;
-		character = 0;
+		i = 0;
+		chr = 0;
 	}
 	client_pid = info->si_pid;
-	character = character << 1;
+	chr = chr * 2;
 	if (signum == SIGUSR1)
-		character = character | 1;
-	bit_count++;
-	if (bit_count == 8)
+		chr = chr + 1;
+	i++;
+	if (i == 8)
 	{
-		write(1, &character, 1);
-		if (character == '\0')
+		write(1, &chr, 1);
+		if (chr == '\0')
 			write(1, "\n", 1);
-		bit_count = 0;
-		character = 0;
+		i = 0;
+		chr = 0;
 	}
 	kill(client_pid, SIGUSR2);
 }
@@ -73,8 +73,9 @@ int	main(void)
 {
 	struct sigaction	sa;
 
+	ft_memset(&sa, 0, sizeof(struct sigaction));
 	header();
-	sa.sa_sigaction = &ft_handle_signal;
+	sa.sa_sigaction = &ft_read_signal;
 	sa.sa_flags = SA_SIGINFO;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);

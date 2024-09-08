@@ -1,79 +1,63 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client_bonus.c                                     :+:      :+:    :+:   */
+/*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waalexan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:50:46 by waalexan          #+#    #+#             */
-/*   Updated: 2024/06/21 13:08:49 by waalexan         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:51:20 by waalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk_bonus.h"
 
-int	g_config_flag = 0;
+static int	g_interroptor = 0;
 
-void	ft_resp_handler(int signum)
+static void	ft_get_flag(int signum)
 {
-	g_config_flag = 1;
+	g_interroptor = 1;
 	(void)signum;
 }
 
-void	ft_send_bit(int pid, int bit)
-{
-	int	signal;
-
-	if (bit == 1)
-		signal = SIGUSR1;
-	else
-		signal = SIGUSR2;
-	if (kill(pid, signal) == -1)
-	{
-		ft_putstr("error");
-		exit(EXIT_FAILURE);
-	}
-	while (!g_config_flag)
-		;
-	g_config_flag = 0;
-}
-
-void	ft_send_char(int pid, unsigned char c)
+static void	ft_write_signal(int pid, unsigned char c)
 {
 	int	i;
 
 	i = 7;
 	while (i >= 0)
 	{
-		ft_send_bit(pid, (c >> i) & 1);
-		usleep(400);
+		if ((c >> i) & 1)
+			kill(pid, SIGUSR1);
+		else
+			kill(pid, SIGUSR2);
+		while (!g_interroptor)
+			;
+		g_interroptor = 0;
 		i--;
 	}
-}
-
-void	ft_send_string(int pid, const char *str)
-{
-	while (*str)
-		ft_send_char(pid, *str++);
-	ft_send_char(pid, '\0');
 }
 
 int	main(int ac, char **av)
 {
 	pid_t	pid;
+	char	*str;
 
+	str = av[2];
 	if (ac != 3)
 	{
-		ft_putstr("tens que usar: ./client [IPID] [STRING]\n");
-		exit(EXIT_FAILURE);
+		ft_putstr("./client [IPID] [MENSAGEM]\n");
+		return (0);
 	}
 	pid = ft_atoi(av[1]);
 	if (pid <= 0)
 	{
 		ft_putstr("PID invalido\n");
-		exit(EXIT_FAILURE);
+		return (0);
 	}
-	signal (SIGUSR2, ft_resp_handler);
-	ft_send_string(pid, av[2]);
+	signal (SIGUSR2, ft_get_flag);
+	while (*str)
+		ft_write_signal(pid, *str++);
+	ft_write_signal(pid, '\0');
 	return (0);
 }
